@@ -51,8 +51,10 @@ class ProxyPool:
         这个过程需要阻塞队列
         :return:
         """
-
-        self._lock.acquire()
+        # 这里可以让其他线程不必等待锁，直接等待获取ip即可(能发挥阈值的作用)
+        if not self._lock.acquire(blocking=False):
+            logger.debug("已经有线程开始提取")
+            return
 
         logger.debug("进入请求锁")
 

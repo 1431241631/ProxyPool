@@ -13,14 +13,14 @@ def work(i):
     ip = proxy_pool.pop()
     logger.info(f"{i}: {ip}")
     # 模拟工作
-    time.time(3)
+    time.sleep(3)
 
 
 # 初始化线程池
 thread_pool = ThreadPoolExecutor(max_workers=10)
 # 初始化ip代理池
-proxy_pool = ProxyPool(proxy_url="http://127.0.0.1/extract", hp=3)
-for index in range(50):
+proxy_pool = ProxyPool(proxy_url="http://127.0.0.1/extract", threshold=20, hp=3)
+for index in range(100):
     thread_pool.submit(work, index)
 
 # 等待线程池结束
